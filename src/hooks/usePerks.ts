@@ -9,7 +9,9 @@ export const usePerks = () => {
   useEffect(() => {
     // Load from localStorage or use mock data
     const savedPerks = localStorage.getItem('utilize-my-tech-perks');
-    if (savedPerks) {
+    const demoCleared = localStorage.getItem('utilize-my-tech-demo-cleared');
+    
+    if (savedPerks && demoCleared !== 'true') {
       try {
         const parsedPerks = JSON.parse(savedPerks);
         setPerks(parsedPerks);
@@ -17,6 +19,8 @@ export const usePerks = () => {
         console.error('Error parsing saved perks:', error);
         setPerks(mockPerks);
       }
+    } else if (demoCleared === 'true') {
+      setPerks([]);
     } else {
       setPerks(mockPerks);
     }
@@ -68,6 +72,7 @@ export const usePerks = () => {
   const clearAllData = () => {
     setPerks([]);
     localStorage.removeItem('utilize-my-tech-perks');
+    localStorage.setItem('utilize-my-tech-demo-cleared', 'true');
   };
 
   const categorizePerks = () => {

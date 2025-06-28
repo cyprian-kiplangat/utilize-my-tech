@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ExternalLink, Calendar, User, Package, Edit3, Save, X } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, User, Package, Edit3, Save, X, Trash2, Edit } from 'lucide-react';
 import { Perk } from '../types';
 import { usePerks } from '../hooks/usePerks';
+import { motion } from 'framer-motion';
 
 interface PerkDetailProps {
   perkId: string;
@@ -9,10 +10,26 @@ interface PerkDetailProps {
 }
 
 export const PerkDetail: React.FC<PerkDetailProps> = ({ perkId, onBack }) => {
-  const { perks, updatePerk } = usePerks();
+  const { perks, updatePerk, deletePerk } = usePerks();
   const perk = perks.find(p => p.id === perkId);
   const [isEditingNotes, setIsEditingNotes] = useState(false);
+  const [isEditingPerk, setIsEditingPerk] = useState(false);
   const [noteInput, setNoteInput] = useState('');
+  const [editForm, setEditForm] = useState<Partial<Perk>>({});
+
+  React.useEffect(() => {
+    if (perk && isEditingPerk) {
+      setEditForm({
+        name: perk.name,
+        description: perk.description,
+        link: perk.link,
+        expiryDate: perk.expiryDate,
+        category: perk.category,
+        provider: perk.provider,
+        value: perk.value
+      });
+    }
+  }, [perk, isEditingPerk]);
 
   if (!perk) {
     return (
@@ -54,6 +71,18 @@ export const PerkDetail: React.FC<PerkDetailProps> = ({ perkId, onBack }) => {
     updatePerk(perk.id, { notes: newNotes });
   };
 
+  const handleSaveEdit = () => {
+    updatePerk(perk.id, editForm);
+    setIsEditingPerk(false);
+  };
+
+  const handleDeletePerk = () => {
+    if (window.confirm(`Are you sure you want to delete "${perk.name}"? This action cannot be undone.`)) {
+      deletePerk(perk.id);
+      onBack();
+    }
+  };
+
   const getDaysUntilExpiry = () => {
     const now = new Date();
     const expiryDate = new Date(perk.expiryDate);
@@ -67,20 +96,50 @@ export const PerkDetail: React.FC<PerkDetailProps> = ({ perkId, onBack }) => {
     { key: 'sharedWithTeam', label: 'Shared with Team' },
   ] as const;
 
+  const categories = [
+    'Cloud Platform', 'AI Platform', 'Hosting Platform', 'Database', 
+    'AI Development Tool', 'Analytics', 'Monitoring', 'API Service', 
+    'Design Tool', 'Communication', 'Other'
+  ];
+
   const daysUntilExpiry = getDaysUntilExpiry();
   const isExpiringSoon = daysUntilExpiry <= 7 && daysUntilExpiry > 0;
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center space-x-4">
-        <button
-          onClick={onBack}
-          className="p-2 hover:bg-slate-800 rounded-lg transition-colors duration-200"
-        >
-          <ArrowLeft size={20} className="text-slate-400" />
-        </button>
-        <h1 className="text-2xl font-bold text-white">{perk.name}</h1>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={onBack}
+            className="p-2 hover:bg-slate-800 rounded-lg transition-colors duration-200"
+          >
+            <ArrowLeft size={20} className="text-slate-400" />
+          </button>
+          <h1 className="text-2xl font-bold text-white">{perk.name}</h1>
+        </div>
+        
+        <div className="flex items-center space-x-3">
+          <motion.button
+            onClick={() => setIsEditingPerk(!isEditingPerk)}
+            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Edit size={16} />
+            <span>{isEditingPerk ? 'Cancel Edit' : 'Edit'}</span>
+          </motion.button>
+          
+          <motion.button
+            onClick={handleDeletePerk}
+            className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors duration-200"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Trash2 size={16} />
+            <span>Delete</span>
+          </motion.button>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -90,37 +149,138 @@ export const PerkDetail: React.FC<PerkDetailProps> = ({ perkId, onBack }) => {
           {/* Overview Card */}
           <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
             <h2 className="text-lg font-semibold text-white mb-4">Overview</h2>
-            <p className="text-slate-300 mb-6">{perk.description}</p>
             
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="flex items-center space-x-3">
-                <Package size={16} className="text-slate-500" />
+            {isEditingPerk ? (
+              <div className="space-y-4">
                 <div>
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">Provider</p>
-                  <p className="text-slate-300">{perk.provider}</p>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Name</label>
+                  <input
+                    type="text"
+                    value={editForm.name || ''}
+                    onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Description</label>
+                  <textarea
+                    value={editForm.description || ''}
+                    onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
+                    rows={3}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500 resize-none"
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Provider</label>
+                    <input
+                      type="text"
+                      value={editForm.provider || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, provider: e.target.value }))}
+                      className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Value</label>
+                    <input
+                      type="text"
+                      value={editForm.value || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, value: e.target.value }))}
+                      className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
+                    <select
+                      value={editForm.category || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, category: e.target.value }))}
+                      className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                    >
+                      {categories.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Expiry Date</label>
+                    <input
+                      type="date"
+                      value={editForm.expiryDate || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, expiryDate: e.target.value }))}
+                      className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Link</label>
+                  <input
+                    type="url"
+                    value={editForm.link || ''}
+                    onChange={(e) => setEditForm(prev => ({ ...prev, link: e.target.value }))}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                
+                <div className="flex items-center space-x-3 pt-4">
+                  <button
+                    onClick={handleSaveEdit}
+                    className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-200"
+                  >
+                    <Save size={16} />
+                    <span>Save Changes</span>
+                  </button>
+                  <button
+                    onClick={() => setIsEditingPerk(false)}
+                    className="flex items-center space-x-2 px-4 py-2 text-slate-400 hover:text-slate-300 transition-colors duration-200"
+                  >
+                    <X size={16} />
+                    <span>Cancel</span>
+                  </button>
                 </div>
               </div>
-              <div className="flex items-center space-x-3">
-                <Calendar size={16} className="text-slate-500" />
-                <div>
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">Expires</p>
-                  <p className={`${isExpiringSoon ? 'text-red-400' : 'text-slate-300'}`}>
-                    {new Date(perk.expiryDate).toLocaleDateString()}
-                  </p>
+            ) : (
+              <>
+                <p className="text-slate-300 mb-6">{perk.description}</p>
+                
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="flex items-center space-x-3">
+                    <Package size={16} className="text-slate-500" />
+                    <div>
+                      <p className="text-xs text-slate-500 uppercase tracking-wide">Provider</p>
+                      <p className="text-slate-300">{perk.provider}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Calendar size={16} className="text-slate-500" />
+                    <div>
+                      <p className="text-xs text-slate-500 uppercase tracking-wide">Expires</p>
+                      <p className={`${isExpiringSoon ? 'text-red-400' : 'text-slate-300'}`}>
+                        {new Date(perk.expiryDate).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {perk.link && (
-              <a
-                href={perk.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
-              >
-                <ExternalLink size={16} />
-                <span>Visit Platform</span>
-              </a>
+                {perk.link && (
+                  <a
+                    href={perk.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
+                  >
+                    <ExternalLink size={16} />
+                    <span>Visit Platform</span>
+                  </a>
+                )}
+              </>
             )}
           </div>
 

@@ -1,35 +1,16 @@
 import { Perk } from '../types';
 
-export const mockPerks: Perk[] = [
+export const realMockPerks: Perk[] = [
   {
-    id: '1',
-    name: 'GitHub Copilot',
-    description: 'AI-powered code completion and suggestions. Free for students and open source contributors.',
-    link: 'https://github.com/copilot',
-    expiryDate: '2025-02-28',
+    id: 'bolt-1',
+    name: 'Bolt Pro Weekend Access',
+    description: 'Free Bolt Pro access for 48 hours with 3M tokens/day (10x boost) and advanced features. Build something amazing!',
+    link: 'https://bolt.new',
+    expiryDate: '2025-01-26',
     category: 'AI Development Tool',
-    status: 'in-progress',
-    value: '$10/month',
-    provider: 'GitHub',
-    notes: ['Really helpful for React components', 'Saves about 30% of typing time'],
-    progress: {
-      readDocs: true,
-      usedInProject: true,
-      completedTutorial: false,
-      sharedWithTeam: false
-    },
-    createdAt: '2025-01-05'
-  },
-  {
-    id: '2',
-    name: 'Vercel Pro Trial',
-    description: '14-day free trial of Vercel Pro with advanced analytics, team collaboration, and priority support.',
-    link: 'https://vercel.com/pro',
-    expiryDate: '2025-01-25',
-    category: 'Hosting Platform',
     status: 'unused',
-    value: '$20/month',
-    provider: 'Vercel',
+    value: '$30',
+    provider: 'Bolt.new',
     notes: [],
     progress: {
       readDocs: false,
@@ -37,37 +18,113 @@ export const mockPerks: Perk[] = [
       completedTutorial: false,
       sharedWithTeam: false
     },
-    createdAt: '2025-01-11'
+    createdAt: '2025-01-24'
   },
   {
-    id: '3',
-    name: 'OpenAI API Credits',
-    description: '$5 in free API credits for new accounts. Perfect for experimenting with GPT-4 and other models.',
-    link: 'https://openai.com/api/',
-    expiryDate: '2025-04-11',
+    id: 'elevenlabs-1',
+    name: 'ElevenLabs Creator Tier',
+    description: '3 months free Creator Tier with 100k credits/month, pro voice cloning, and 192 kbps audio quality.',
+    link: 'https://elevenlabs.io',
+    expiryDate: '2025-04-24',
     category: 'AI Platform',
+    status: 'unused',
+    value: '$99',
+    provider: 'ElevenLabs',
+    notes: [],
+    progress: {
+      readDocs: false,
+      usedInProject: false,
+      completedTutorial: false,
+      sharedWithTeam: false
+    },
+    createdAt: '2025-01-24'
+  },
+  {
+    id: 'revenuecat-1',
+    name: 'RevenueCat Free Tier',
+    description: '100% free for Bolt participants until your app makes $2.5K+/month. Mobile and web monetization SDK.',
+    link: 'https://rev.cat/bolt',
+    expiryDate: '2025-12-31',
+    category: 'API Service',
     status: 'in-progress',
-    value: '$5',
-    provider: 'OpenAI',
-    notes: ['Used for a chatbot prototype', 'Rate limits are pretty generous for testing'],
+    value: '$89/month',
+    provider: 'RevenueCat',
+    notes: ['Integrated into my mobile app project', 'Great documentation and support'],
+    progress: {
+      readDocs: true,
+      usedInProject: true,
+      completedTutorial: false,
+      sharedWithTeam: false
+    },
+    createdAt: '2025-01-24'
+  },
+  {
+    id: 'entri-1',
+    name: 'Free Domain for 1 Year',
+    description: 'Free custom domain for 1 year from Entri. Perfect for deploying your Bolt projects to production.',
+    link: 'https://entri.com/bolt',
+    expiryDate: '2026-01-24',
+    category: 'Hosting Platform',
+    status: 'unused',
+    value: '$15',
+    provider: 'Entri',
+    notes: [],
+    progress: {
+      readDocs: false,
+      usedInProject: false,
+      completedTutorial: false,
+      sharedWithTeam: false
+    },
+    createdAt: '2025-01-24'
+  },
+  {
+    id: 'algorand-1',
+    name: 'Nodely Unlimited API Access',
+    description: '2 months of Nodely Unlimited API access for Algorand/IPFS development. Perfect for Web3 projects.',
+    link: 'https://nodely.io/bolt-new-promo',
+    expiryDate: '2025-03-24',
+    category: 'API Service',
+    status: 'unused',
+    value: '$512',
+    provider: 'Algorand/IPFS',
+    notes: [],
+    progress: {
+      readDocs: false,
+      usedInProject: false,
+      completedTutorial: false,
+      sharedWithTeam: false
+    },
+    createdAt: '2025-01-24'
+  },
+  {
+    id: 'sentry-1',
+    name: 'Sentry Team Plan',
+    description: '6 months of Sentry Team Plan including error monitoring, logs, replays, and performance tracing.',
+    link: 'https://sentry.io/promo/bolt',
+    expiryDate: '2025-07-24',
+    category: 'Monitoring',
+    status: 'in-progress',
+    value: '$348',
+    provider: 'Sentry',
+    notes: ['Set up error monitoring for my React app', 'Really helpful for debugging production issues'],
     progress: {
       readDocs: true,
       usedInProject: true,
       completedTutorial: true,
       sharedWithTeam: false
     },
-    createdAt: '2025-01-11'
+    createdAt: '2025-01-24'
   },
   {
-    id: '4',
-    name: 'Railway Starter Credits',
-    description: '$5 in free credits for new users. Great for deploying Node.js apps and databases.',
-    link: 'https://railway.app',
-    expiryDate: '2025-02-10',
+    id: 'expo-1',
+    name: 'Expo Production Plan',
+    description: '1 free month of Expo Production plan ($99 value). Build and ship unlimited React Native apps.',
+    link: 'https://expo.dev',
+    expiryDate: '2025-02-24',
     category: 'Hosting Platform',
     status: 'unused',
-    value: '$5',
-    provider: 'Railway',
+    value: '$99',
+    provider: 'Expo',
     notes: [],
     progress: {
       readDocs: false,
@@ -75,98 +132,51 @@ export const mockPerks: Perk[] = [
       completedTutorial: false,
       sharedWithTeam: false
     },
-    createdAt: '2025-01-10'
+    createdAt: '2025-01-24'
   },
   {
-    id: '5',
-    name: 'Supabase Pro Trial',
-    description: '1-month free trial of Supabase Pro with advanced auth, real-time subscriptions, and priority support.',
-    link: 'https://supabase.com/pricing',
-    expiryDate: '2025-02-15',
-    category: 'Database',
-    status: 'unused',
-    value: '$25/month',
-    provider: 'Supabase',
-    notes: [],
-    progress: {
-      readDocs: false,
-      usedInProject: false,
-      completedTutorial: false,
-      sharedWithTeam: false
-    },
-    createdAt: '2025-01-15'
-  },
-  {
-    id: '6',
-    name: 'Figma Professional',
-    description: '30-day free trial of Figma Professional with unlimited projects and advanced prototyping.',
-    link: 'https://figma.com/pricing',
-    expiryDate: '2025-01-30',
-    category: 'Design Tool',
+    id: 'tavus-1',
+    name: 'Tavus Conversational Video Credits',
+    description: '$150 in free Tavus credits for 250 conversational video minutes and 3 replica generations.',
+    link: 'https://tavus.io',
+    expiryDate: '2025-04-24',
+    category: 'AI Platform',
     status: 'completed',
-    value: '$12/month',
-    provider: 'Figma',
-    notes: ['Used for designing the app UI', 'Great collaboration features', 'Definitely worth the subscription'],
+    value: '$150',
+    provider: 'Tavus',
+    notes: ['Used for creating AI video demos', 'Amazing quality and easy integration', 'Definitely worth exploring further'],
     progress: {
       readDocs: true,
       usedInProject: true,
       completedTutorial: true,
       sharedWithTeam: true
     },
-    createdAt: '2024-12-30'
-  },
-  {
-    id: '7',
-    name: 'Netlify Pro Trial',
-    description: '14-day free trial with advanced build settings, form handling, and team collaboration.',
-    link: 'https://netlify.com/pricing',
-    expiryDate: '2025-01-22',
-    category: 'Hosting Platform',
-    status: 'unused',
-    value: '$19/month',
-    provider: 'Netlify',
-    notes: [],
-    progress: {
-      readDocs: false,
-      usedInProject: false,
-      completedTutorial: false,
-      sharedWithTeam: false
-    },
-    createdAt: '2025-01-08'
-  },
-  {
-    id: '8',
-    name: 'MongoDB Atlas Free Tier',
-    description: 'Permanent free tier with 512MB storage. Great for learning and small projects.',
-    link: 'https://mongodb.com/atlas',
-    expiryDate: '2026-01-01',
-    category: 'Database',
-    status: 'in-progress',
-    value: '$9/month equivalent',
-    provider: 'MongoDB',
-    notes: ['Using for a side project', 'Free tier is surprisingly generous'],
-    progress: {
-      readDocs: true,
-      usedInProject: true,
-      completedTutorial: false,
-      sharedWithTeam: false
-    },
-    createdAt: '2024-12-20'
+    createdAt: '2025-01-24'
   }
 ];
+
+// Use real data by default
+export const mockPerks: Perk[] = realMockPerks;
 
 // Helper function to check if user is using demo data
 export const isDemoData = () => {
   const savedPerks = localStorage.getItem('utilize-my-tech-perks');
+  const demoCleared = localStorage.getItem('utilize-my-tech-demo-cleared');
+  
+  if (demoCleared === 'true') return false;
   if (!savedPerks) return true;
   
   try {
     const parsedPerks = JSON.parse(savedPerks);
     // Check if the saved data matches our mock data structure
     return parsedPerks.some((perk: Perk) => 
-      mockPerks.some(mockPerk => mockPerk.id === perk.id)
+      realMockPerks.some(mockPerk => mockPerk.id === perk.id)
     );
   } catch {
     return true;
   }
+};
+
+export const clearDemoFlag = () => {
+  localStorage.setItem('utilize-my-tech-demo-cleared', 'true');
 };

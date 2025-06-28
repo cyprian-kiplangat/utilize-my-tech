@@ -1,7 +1,7 @@
 import React from 'react';
 import { PerkCard } from './PerkCard';
 import { usePerks } from '../hooks/usePerks';
-import { isDemoData } from '../data/mockData';
+import { isDemoData, clearDemoFlag } from '../data/mockData';
 import { AlertTriangle, Zap, Play, CheckCircle, Loader, TrendingUp, DollarSign, Clock, Target, Trash2, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -22,8 +22,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
   const handleClearDemoData = () => {
     if (window.confirm('This will remove all demo data and start fresh. Are you sure?')) {
       clearAllData();
+      clearDemoFlag();
       setShowDemoNotice(false);
     }
+  };
+
+  const handleContinueWithDemo = () => {
+    setShowDemoNotice(false);
   };
   
   if (!isLoaded) {
@@ -134,9 +139,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
               <Info size={24} className="text-white" />
             </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold text-blue-400 mb-2">👋 Welcome! You're viewing demo data</h3>
+              <h3 className="text-xl font-bold text-blue-400 mb-2">👋 Welcome! You're viewing real demo data</h3>
               <p className="text-blue-200 mb-4">
-                This portfolio contains sample data to show you how UtilizeMyTech works. These are realistic examples of free trials and credits that developers commonly receive.
+                This portfolio contains <strong>actual perks from the Bolt.new ecosystem</strong> - real offers that developers are currently using. 
+                These represent $1,300+ in genuine value that you could claim today!
               </p>
               <div className="flex flex-wrap gap-3">
                 <button
@@ -147,10 +153,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
                   <span>Clear Demo Data</span>
                 </button>
                 <button
-                  onClick={() => setShowDemoNotice(false)}
+                  onClick={handleContinueWithDemo}
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-medium transition-colors duration-200"
                 >
-                  Got it, continue with demo
+                  Got it, continue exploring
                 </button>
               </div>
             </div>
