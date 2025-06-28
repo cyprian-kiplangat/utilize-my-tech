@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Plus, Bot, Settings, TrendingUp, Zap } from 'lucide-react';
+import { Home, Plus, Bot, Settings, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface LayoutProps {
@@ -59,11 +59,84 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigat
             >
               <div className="relative">
                 <motion.div 
-                  className="w-12 h-12 bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl"
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-2xl overflow-hidden"
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Zap className="text-white" size={24} />
+                  {/* Revolutionary Custom Icon */}
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="24" fill="url(#headerBg)"/>
+                    <circle cx="24" cy="24" r="20" stroke="url(#headerRing)" strokeWidth="1" fill="none" opacity="0.6"/>
+                    <circle cx="24" cy="24" r="7" fill="url(#headerCore)"/>
+                    <path d="M26 20L22 24H25L21 28L25 24H23L26 20Z" fill="white"/>
+                    
+                    {/* Orbiting nodes */}
+                    <circle cx="24" cy="8" r="2" fill="url(#headerNode1)"/>
+                    <circle cx="24" cy="8" r="1" fill="white" opacity="0.9"/>
+                    
+                    <circle cx="36" cy="18" r="2" fill="url(#headerNode2)"/>
+                    <circle cx="36" cy="18" r="1" fill="white" opacity="0.9"/>
+                    
+                    <circle cx="36" cy="30" r="2" fill="url(#headerNode3)"/>
+                    <circle cx="36" cy="30" r="1" fill="white" opacity="0.9"/>
+                    
+                    <circle cx="24" cy="40" r="2" fill="url(#headerNode4)"/>
+                    <circle cx="24" cy="40" r="1" fill="white" opacity="0.9"/>
+                    
+                    <circle cx="12" cy="30" r="2" fill="url(#headerNode5)"/>
+                    <circle cx="12" cy="30" r="1" fill="white" opacity="0.9"/>
+                    
+                    <circle cx="12" cy="18" r="2" fill="url(#headerNode6)"/>
+                    <circle cx="12" cy="18" r="1" fill="white" opacity="0.9"/>
+                    
+                    <defs>
+                      <radialGradient id="headerBg" cx="0.3" cy="0.3">
+                        <stop offset="0%" stopColor="#1e293b"/>
+                        <stop offset="100%" stopColor="#0f172a"/>
+                      </radialGradient>
+                      
+                      <linearGradient id="headerRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#10b981"/>
+                        <stop offset="50%" stopColor="#3b82f6"/>
+                        <stop offset="100%" stopColor="#8b5cf6"/>
+                      </linearGradient>
+                      
+                      <radialGradient id="headerCore" cx="0.3" cy="0.3">
+                        <stop offset="0%" stopColor="#60a5fa"/>
+                        <stop offset="100%" stopColor="#3b82f6"/>
+                      </radialGradient>
+                      
+                      <linearGradient id="headerNode1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#10b981"/>
+                        <stop offset="100%" stopColor="#059669"/>
+                      </linearGradient>
+                      
+                      <linearGradient id="headerNode2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#3b82f6"/>
+                        <stop offset="100%" stopColor="#2563eb"/>
+                      </linearGradient>
+                      
+                      <linearGradient id="headerNode3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#8b5cf6"/>
+                        <stop offset="100%" stopColor="#7c3aed"/>
+                      </linearGradient>
+                      
+                      <linearGradient id="headerNode4" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#f59e0b"/>
+                        <stop offset="100%" stopColor="#d97706"/>
+                      </linearGradient>
+                      
+                      <linearGradient id="headerNode5" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#ef4444"/>
+                        <stop offset="100%" stopColor="#dc2626"/>
+                      </linearGradient>
+                      
+                      <linearGradient id="headerNode6" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#06b6d4"/>
+                        <stop offset="100%" stopColor="#0891b2"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </motion.div>
                 <motion.div
                   className="absolute -inset-1 bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-2xl blur opacity-30"

@@ -1,0 +1,144 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle with Gradient -->
+  <circle cx="256" cy="256" r="256" fill="url(#backgroundGradient)"/>
+  
+  <!-- Outer Ring - Investment Portfolio -->
+  <circle cx="256" cy="256" r="220" stroke="url(#ringGradient)" stroke-width="8" fill="none" opacity="0.6"/>
+  
+  <!-- Central Tech Core -->
+  <circle cx="256" cy="256" r="80" fill="url(#coreGradient)"/>
+  
+  <!-- Lightning Bolt - Power/Energy -->
+  <path d="M280 200L240 256H270L232 312L272 256H242L280 200Z" fill="white" stroke="url(#lightningGradient)" stroke-width="2"/>
+  
+  <!-- Orbiting Investment Nodes -->
+  <g transform="rotate(0 256 256)">
+    <circle cx="256" cy="140" r="16" fill="url(#nodeGradient1)"/>
+    <circle cx="256" cy="140" r="8" fill="white" opacity="0.9"/>
+  </g>
+  
+  <g transform="rotate(72 256 256)">
+    <circle cx="256" cy="140" r="16" fill="url(#nodeGradient2)"/>
+    <circle cx="256" cy="140" r="8" fill="white" opacity="0.9"/>
+  </g>
+  
+  <g transform="rotate(144 256 256)">
+    <circle cx="256" cy="140" r="16" fill="url(#nodeGradient3)"/>
+    <circle cx="256" cy="140" r="8" fill="white" opacity="0.9"/>
+  </g>
+  
+  <g transform="rotate(216 256 256)">
+    <circle cx="256" cy="140" r="16" fill="url(#nodeGradient4)"/>
+    <circle cx="256" cy="140" r="8" fill="white" opacity="0.9"/>
+  </g>
+  
+  <g transform="rotate(288 256 256)">
+    <circle cx="256" cy="140" r="16" fill="url(#nodeGradient5)"/>
+    <circle cx="256" cy="140" r="8" fill="white" opacity="0.9"/>
+  </g>
+  
+  <!-- Connection Lines - Portfolio Network -->
+  <g opacity="0.4">
+    <line x1="256" y1="176" x2="256" y2="140" stroke="url(#connectionGradient)" stroke-width="2"/>
+    <line x1="256" y1="176" x2="326.4" y2="184.8" stroke="url(#connectionGradient)" stroke-width="2"/>
+    <line x1="256" y1="176" x2="299.6" y2="267.2" stroke="url(#connectionGradient)" stroke-width="2"/>
+    <line x1="256" y1="176" x2="212.4" y2="267.2" stroke="url(#connectionGradient)" stroke-width="2"/>
+    <line x1="256" y1="176" x2="185.6" y2="184.8" stroke="url(#connectionGradient)" stroke-width="2"/>
+  </g>
+  
+  <!-- ROI Growth Arrow -->
+  <path d="M350 180L380 150L350 120M380 150L320 150" stroke="url(#arrowGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Value Indicator Bars -->
+  <rect x="140" y="350" width="8" height="40" rx="4" fill="url(#barGradient1)"/>
+  <rect x="155" y="340" width="8" height="50" rx="4" fill="url(#barGradient2)"/>
+  <rect x="170" y="330" width="8" height="60" rx="4" fill="url(#barGradient3)"/>
+  <rect x="185" y="320" width="8" height="70" rx="4" fill="url(#barGradient4)"/>
+  
+  <!-- Gradients -->
+  <defs>
+    <!-- Background -->
+    <radialGradient id="backgroundGradient" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    
+    <!-- Ring -->
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    
+    <!-- Core -->
+    <radialGradient id="coreGradient" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </radialGradient>
+    
+    <!-- Lightning -->
+    <linearGradient id="lightningGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    
+    <!-- Nodes -->
+    <linearGradient id="nodeGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    
+    <linearGradient id="nodeGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    
+    <linearGradient id="nodeGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    
+    <linearGradient id="nodeGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    
+    <linearGradient id="nodeGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    
+    <!-- Connections -->
+    <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.4"/>
+    </linearGradient>
+    
+    <!-- Arrow -->
+    <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    
+    <!-- Bars -->
+    <linearGradient id="barGradient1" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#f87171"/>
+    </linearGradient>
+    
+    <linearGradient id="barGradient2" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    
+    <linearGradient id="barGradient3" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    
+    <linearGradient id="barGradient4" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+</svg>

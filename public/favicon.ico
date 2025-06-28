@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="16" cy="16" r="16" fill="url(#faviconBg)"/>
+  <circle cx="16" cy="16" r="5" fill="url(#faviconCore)"/>
+  <path d="M17.5 12L14.5 16H16.5L13.5 20L16.5 16H15L17.5 12Z" fill="white"/>
+  <defs>
+    <radialGradient id="faviconBg" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <radialGradient id="faviconCore" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </radialGradient>
+  </defs>
+</svg>

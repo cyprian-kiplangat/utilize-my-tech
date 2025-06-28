@@ -1,0 +1,78 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="40" fill="url(#appleBg)"/>
+  <circle cx="90" cy="90" r="70" stroke="url(#appleRing)" stroke-width="3" fill="none" opacity="0.6"/>
+  <circle cx="90" cy="90" r="25" fill="url(#appleCore)"/>
+  <path d="M98 75L82 90H92L74 105L90 90H80L98 75Z" fill="white" stroke="url(#appleLightning)" stroke-width="1"/>
+  
+  <!-- Orbiting nodes -->
+  <circle cx="90" cy="40" r="6" fill="url(#appleNode1)"/>
+  <circle cx="90" cy="40" r="3" fill="white" opacity="0.9"/>
+  
+  <circle cx="131" cy="65" r="6" fill="url(#appleNode2)"/>
+  <circle cx="131" cy="65" r="3" fill="white" opacity="0.9"/>
+  
+  <circle cx="131" cy="115" r="6" fill="url(#appleNode3)"/>
+  <circle cx="131" cy="115" r="3" fill="white" opacity="0.9"/>
+  
+  <circle cx="90" cy="140" r="6" fill="url(#appleNode4)"/>
+  <circle cx="90" cy="140" r="3" fill="white" opacity="0.9"/>
+  
+  <circle cx="49" cy="115" r="6" fill="url(#appleNode5)"/>
+  <circle cx="49" cy="115" r="3" fill="white" opacity="0.9"/>
+  
+  <circle cx="49" cy="65" r="6" fill="url(#appleNode6)"/>
+  <circle cx="49" cy="65" r="3" fill="white" opacity="0.9"/>
+  
+  <defs>
+    <radialGradient id="appleBg" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    
+    <linearGradient id="appleRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    
+    <radialGradient id="appleCore" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </radialGradient>
+    
+    <linearGradient id="appleLightning" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    
+    <linearGradient id="appleNode1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    
+    <linearGradient id="appleNode2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    
+    <linearGradient id="appleNode3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    
+    <linearGradient id="appleNode4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    
+    <linearGradient id="appleNode5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    
+    <linearGradient id="appleNode6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+  </defs>
+</svg>
