@@ -65,6 +65,11 @@ export const usePerks = () => {
     });
   };
 
+  const clearAllData = () => {
+    setPerks([]);
+    localStorage.removeItem('utilize-my-tech-perks');
+  };
+
   const categorizePerks = () => {
     const now = new Date();
     const expiringSoon = perks.filter(perk => {
@@ -92,6 +97,7 @@ export const usePerks = () => {
     addPerk,
     updatePerk,
     deletePerk,
+    clearAllData,
     categorizePerks,
     isLoaded
   };

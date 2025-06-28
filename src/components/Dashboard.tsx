@@ -1,7 +1,8 @@
 import React from 'react';
 import { PerkCard } from './PerkCard';
 import { usePerks } from '../hooks/usePerks';
-import { AlertTriangle, Zap, Play, CheckCircle, Loader, TrendingUp, DollarSign, Clock, Target } from 'lucide-react';
+import { isDemoData } from '../data/mockData';
+import { AlertTriangle, Zap, Play, CheckCircle, Loader, TrendingUp, DollarSign, Clock, Target, Trash2, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface DashboardProps {
@@ -9,7 +10,21 @@ interface DashboardProps {
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
-  const { categorizePerks, isLoaded, perks } = usePerks();
+  const { categorizePerks, isLoaded, perks, clearAllData } = usePerks();
+  const [showDemoNotice, setShowDemoNotice] = React.useState(false);
+  
+  React.useEffect(() => {
+    if (isLoaded && isDemoData()) {
+      setShowDemoNotice(true);
+    }
+  }, [isLoaded]);
+
+  const handleClearDemoData = () => {
+    if (window.confirm('This will remove all demo data and start fresh. Are you sure?')) {
+      clearAllData();
+      setShowDemoNotice(false);
+    }
+  };
   
   if (!isLoaded) {
     return (
@@ -106,6 +121,43 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
 
   return (
     <div className="space-y-12">
+      {/* Demo Data Notice */}
+      {showDemoNotice && (
+        <motion.div 
+          className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-500/30 rounded-3xl p-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-start space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <Info size={24} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-blue-400 mb-2">👋 Welcome! You're viewing demo data</h3>
+              <p className="text-blue-200 mb-4">
+                This portfolio contains sample data to show you how UtilizeMyTech works. These are realistic examples of free trials and credits that developers commonly receive.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={handleClearDemoData}
+                  className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-xl text-white font-medium transition-colors duration-200"
+                >
+                  <Trash2 size={16} />
+                  <span>Clear Demo Data</span>
+                </button>
+                <button
+                  onClick={() => setShowDemoNotice(false)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-medium transition-colors duration-200"
+                >
+                  Got it, continue with demo
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Hero Section */}
       <motion.div 
         className="text-center space-y-6"
