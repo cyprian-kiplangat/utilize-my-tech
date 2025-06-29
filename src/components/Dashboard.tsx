@@ -16,7 +16,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick, onNavigate })
   
   React.useEffect(() => {
     if (isLoaded && isDemoData()) {
-      setShowDemoNotice(true);
+      // Check if user has already dismissed the notice
+      const noticeDismissed = localStorage.getItem('utilize-my-tech-demo-notice-dismissed');
+      if (noticeDismissed !== 'true') {
+        setShowDemoNotice(true);
+      }
     }
   }, [isLoaded]);
 
@@ -25,11 +29,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick, onNavigate })
       clearAllData();
       clearDemoFlag();
       setShowDemoNotice(false);
+      localStorage.setItem('utilize-my-tech-demo-notice-dismissed', 'true');
     }
   };
 
   const handleContinueWithDemo = () => {
     setShowDemoNotice(false);
+    // Permanently dismiss the notice
+    localStorage.setItem('utilize-my-tech-demo-notice-dismissed', 'true');
   };
 
   const handleAddFirstPerk = () => {
