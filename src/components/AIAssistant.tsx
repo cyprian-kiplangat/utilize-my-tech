@@ -191,7 +191,7 @@ Use markdown formatting for better readability. Be encouraging and strategic in 
 
   return (
     <>
-      <div className="flex flex-col h-[calc(100vh-8rem)]">
+      <div className="flex flex-col h-[calc(100vh-12rem)] md:h-[calc(100vh-8rem)]">
         {/* Header */}
         <div className="bg-slate-900/50 border border-slate-800 rounded-t-xl px-6 py-4">
           <div className="flex items-center justify-between">
@@ -292,8 +292,8 @@ Use markdown formatting for better readability. Be encouraging and strategic in 
           </div>
         )}
 
-        {/* Input */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-b-xl p-4">
+        {/* Input - Added extra padding on mobile */}
+        <div className="bg-slate-900/50 border border-slate-800 rounded-b-xl p-4 pb-6 md:pb-4">
           <form onSubmit={handleSubmit} className="flex space-x-3">
             <input
               ref={inputRef}
