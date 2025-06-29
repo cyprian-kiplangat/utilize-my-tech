@@ -1,60 +1,76 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Lightbulb, BookOpen, Code, Settings } from 'lucide-react';
+import { Send, Bot, User, Lightbulb, BookOpen, Code, Settings, Zap, Search, TrendingUp } from 'lucide-react';
 import { usePerks } from '../hooks/usePerks';
 import { useAISettings } from '../hooks/useAISettings';
+import { useAIDataExtraction } from '../hooks/useAIDataExtraction';
 import { AISettings } from './AISettings';
 import { MarkdownRenderer } from './MarkdownRenderer';
 
 export const AIAssistant: React.FC = () => {
   const { perks } = usePerks();
   const { settings, isConfigured, getSelectedModel } = useAISettings();
+  const { generateOptimizationSuggestions } = useAIDataExtraction();
   const [showSettings, setShowSettings] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: '1',
       role: 'assistant' as const,
-      content: "Hi! I'm your learning assistant. I can help you make the most of your tech perks by suggesting learning paths, project ideas, and best practices. What would you like to explore today?"
+      content: "Hi! I'm your AI investment advisor. I can help you maximize your tech portfolio by suggesting optimization strategies, project ideas, and learning paths. I can also search for new opportunities and extract data from offers. What would you like to explore today?"
     }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const selectedModel = getSelectedModel();
+
+  // Load optimization suggestions
+  useEffect(() => {
+    if (isConfigured() && perks.length > 0) {
+      generateOptimizationSuggestions(perks)
+        .then(setSuggestions)
+        .catch(console.error);
+    }
+  }, [perks, isConfigured, generateOptimizationSuggestions]);
 
   // Create system prompt based on user's perks
   const createSystemPrompt = () => {
     const activePerks = perks.filter(p => p.status !== 'expired');
     const unusedPerks = perks.filter(p => p.status === 'unused');
     const inProgressPerks = perks.filter(p => p.status === 'in-progress');
+    const expiringPerks = perks.filter(perk => {
+      const now = new Date();
+      const expiryDate = new Date(perk.expiryDate);
+      const daysUntilExpiry = Math.ceil((expiryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      return daysUntilExpiry <= 7 && daysUntilExpiry > 0;
+    });
 
-    return `You are a helpful AI learning assistant for UtilizeMyTech, a platform that helps developers maximize their free tech perks and trials.
+    return `You are an AI investment advisor for UtilizeMyTech, helping developers maximize their tech portfolio ROI.
 
-Current user context:
-- Total active perks: ${activePerks.length}
-- Unused perks: ${unusedPerks.map(p => p.name).join(', ') || 'None'}
-- In-progress perks: ${inProgressPerks.map(p => p.name).join(', ') || 'None'}
+Current portfolio context:
+- Total active assets: ${activePerks.length}
+- Unused assets: ${unusedPerks.map(p => `${p.name} (${p.provider}, expires ${p.expiryDate})`).join(', ') || 'None'}
+- In-progress assets: ${inProgressPerks.map(p => `${p.name} (${p.provider})`).join(', ') || 'None'}
+- Expiring soon: ${expiringPerks.map(p => `${p.name} (expires ${p.expiryDate})`).join(', ') || 'None'}
 
-Your role:
-- Help users learn and apply their tech perks effectively
-- Suggest practical project ideas based on available perks
-- Provide learning paths and best practices
-- Keep responses well-formatted using markdown for better readability
-- Use headers, lists, code blocks, and emphasis appropriately
-- Ask follow-up questions to understand their goals
-- Focus on hands-on learning and real-world applications
+Your capabilities:
+- Portfolio optimization advice
+- Project ideas using available resources
+- Learning path recommendations
+- ROI maximization strategies
+- Technology stack suggestions
+- Integration opportunities
 
-Format your responses with proper markdown:
-- Use ## for main sections
-- Use ### for subsections
-- Use **bold** for emphasis
-- Use \`code\` for inline code
-- Use \`\`\`language for code blocks
-- Use - or * for bullet points
-- Use 1. 2. 3. for numbered lists
+Focus on:
+- Actionable, specific advice
+- Maximizing value before expiration
+- Strategic combinations of tools
+- Real-world project applications
+- Professional development opportunities
 
-Be encouraging, practical, and focus on helping them get the most value from their perks before they expire.`;
+Use markdown formatting for better readability. Be encouraging and strategic in your advice.`;
   };
 
   const scrollToBottom = () => {
@@ -80,7 +96,6 @@ Be encouraging, practical, and focus on helping them get the most value from the
     setIsLoading(true);
 
     try {
-      // Simulate AI response using Google Gemini
       const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + settings.selectedModel + ':generateContent?key=' + settings.apiKey, {
         method: 'POST',
         headers: {
@@ -127,9 +142,12 @@ Be encouraging, practical, and focus on helping them get the most value from the
   };
 
   const quickActions = [
+    { icon: TrendingUp, text: "Optimize my portfolio", action: "Analyze my current portfolio and suggest optimization strategies" },
     { icon: Lightbulb, text: "Suggest project ideas", action: "What projects can I build with my current perks?" },
-    { icon: BookOpen, text: "Create learning path", action: "Help me create a learning path" },
-    { icon: Code, text: "Best practices", action: "What are the best practices for my tech stack?" }
+    { icon: BookOpen, text: "Create learning path", action: "Help me create a learning path based on my available resources" },
+    { icon: Code, text: "Integration opportunities", action: "What are the best ways to combine my current tools?" },
+    { icon: Zap, text: "Urgent actions", action: "What should I prioritize with my expiring perks?" },
+    { icon: Search, text: "Find new opportunities", action: "What new perks or offers should I look for?" }
   ];
 
   const handleQuickAction = (action: string) => {
@@ -151,10 +169,10 @@ Be encouraging, practical, and focus on helping them get the most value from the
                 <Bot size={20} className="text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-white">AI Learning Assistant</h2>
+                <h2 className="text-lg font-semibold text-white">AI Investment Advisor</h2>
                 <p className="text-sm text-slate-400">
                   {isConfigured() 
-                    ? `Powered by ${selectedModel.name}` 
+                    ? `Powered by ${selectedModel.name} • Portfolio value optimization` 
                     : 'Configure Google AI to get started'
                   }
                 </p>
@@ -168,6 +186,21 @@ Be encouraging, practical, and focus on helping them get the most value from the
             </button>
           </div>
         </div>
+
+        {/* Portfolio Insights */}
+        {isConfigured() && suggestions.length > 0 && (
+          <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border-x border-slate-800 px-6 py-4">
+            <h3 className="text-sm font-semibold text-blue-400 mb-2">💡 AI Portfolio Insights</h3>
+            <div className="text-xs text-blue-200 space-y-1">
+              {suggestions.slice(0, 2).map((suggestion, index) => (
+                <div key={index} className="flex items-start space-x-2">
+                  <span className="text-blue-400 mt-0.5">•</span>
+                  <span>{suggestion}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Messages */}
         <div className="flex-1 bg-slate-900/30 border-x border-slate-800 overflow-y-auto p-6 space-y-4">
@@ -222,17 +255,17 @@ Be encouraging, practical, and focus on helping them get the most value from the
         {/* Quick Actions */}
         {isConfigured() && (
           <div className="bg-slate-900/30 border-x border-slate-800 px-6 py-3">
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {quickActions.map((action, index) => {
                 const Icon = action.icon;
                 return (
                   <button
                     key={index}
                     onClick={() => handleQuickAction(action.action)}
-                    className="flex items-center space-x-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm text-slate-300 transition-colors duration-200"
+                    className="flex items-center space-x-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm text-slate-300 transition-colors duration-200 text-left"
                   >
                     <Icon size={14} />
-                    <span>{action.text}</span>
+                    <span className="truncate">{action.text}</span>
                   </button>
                 );
               })}
@@ -248,7 +281,7 @@ Be encouraging, practical, and focus on helping them get the most value from the
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={isConfigured() ? "Ask me anything about your tech perks..." : "Configure Google AI first..."}
+              placeholder={isConfigured() ? "Ask me about optimizing your tech portfolio..." : "Configure Google AI first..."}
               disabled={!isConfigured() || isLoading}
               className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors duration-200 disabled:opacity-50"
             />
@@ -267,7 +300,7 @@ Be encouraging, practical, and focus on helping them get the most value from the
                 onClick={() => setShowSettings(true)}
                 className="text-blue-400 hover:text-blue-300 text-sm transition-colors duration-200"
               >
-                Configure Google AI to enable chat →
+                Configure Google AI to enable advanced features →
               </button>
             </div>
           )}
