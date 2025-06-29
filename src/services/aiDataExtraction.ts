@@ -108,12 +108,7 @@ Return only the JSON object, no other text:`;
     const model = this.genAI.getGenerativeModel({ 
       model: "gemini-2.0-flash-lite",
       tools: [{
-        googleSearchRetrieval: {
-          dynamicRetrievalConfig: {
-            mode: "MODE_DYNAMIC",
-            dynamicThreshold: 0.7
-          }
-        }
+        googleSearch: {}
       }]
     });
 
@@ -166,12 +161,7 @@ Limit to top 5 most relevant results.`;
     const model = this.genAI.getGenerativeModel({ 
       model: "gemini-2.0-flash-lite",
       tools: [{
-        googleSearchRetrieval: {
-          dynamicRetrievalConfig: {
-            mode: "MODE_DYNAMIC",
-            dynamicThreshold: 0.7
-          }
-        }
+        googleSearch: {}
       }]
     });
 
