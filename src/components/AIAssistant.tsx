@@ -191,7 +191,7 @@ Use markdown formatting for better readability. Be encouraging and strategic in 
 
   return (
     <>
-      <div className="flex flex-col h-[calc(100vh-12rem)]">
+      <div className="flex flex-col h-[calc(100vh-8rem)]">
         {/* Header */}
         <div className="bg-slate-900/50 border border-slate-800 rounded-t-xl px-6 py-4">
           <div className="flex items-center justify-between">
@@ -218,32 +218,6 @@ Use markdown formatting for better readability. Be encouraging and strategic in 
           </div>
         </div>
 
-        {/* Portfolio Insights */}
-        {isConfigured() && (suggestions.length > 0 || isGeneratingSuggestions) && (
-          <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border-x border-slate-800 px-6 py-4">
-            <h3 className="text-sm font-semibold text-blue-400 mb-2">💡 AI Portfolio Insights</h3>
-            {isGeneratingSuggestions ? (
-              <div className="text-xs text-blue-200 flex items-center space-x-2">
-                <div className="flex space-x-1">
-                  <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce"></div>
-                  <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                </div>
-                <span>Generating optimization suggestions...</span>
-              </div>
-            ) : (
-              <div className="text-xs text-blue-200 space-y-1">
-                {suggestions.slice(0, 2).map((suggestion, index) => (
-                  <div key={index} className="flex items-start space-x-2">
-                    <span className="text-blue-400 mt-0.5">•</span>
-                    <span>{suggestion}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
         {/* Messages */}
         <div className="flex-1 bg-slate-900/30 border-x border-slate-800 overflow-y-auto p-6 space-y-4">
           {messages.map((message) => (
@@ -265,9 +239,11 @@ Use markdown formatting for better readability. Be encouraging and strategic in 
                     : 'bg-slate-800 text-slate-200 border border-slate-700'
                 }`}>
                   {message.role === 'assistant' ? (
-                    <MarkdownRenderer content={message.content} />
+                    <div className="text-sm">
+                      <MarkdownRenderer content={message.content} />
+                    </div>
                   ) : (
-                    <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                    <p className="whitespace-pre-wrap leading-relaxed text-sm">{message.content}</p>
                   )}
                 </div>
               </div>
