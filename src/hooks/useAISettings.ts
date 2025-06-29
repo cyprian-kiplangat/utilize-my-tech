@@ -33,7 +33,7 @@ const defaultSettings: AISettings = {
   apiKey: '',
   selectedModel: 'gemini-2.0-flash-lite',
   temperature: 0.7,
-  maxTokens: 1000
+  maxTokens: 2048
 };
 
 export const useAISettings = () => {
