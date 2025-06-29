@@ -7,9 +7,10 @@ import { motion } from 'framer-motion';
 
 interface DashboardProps {
   onPerkClick: (perkId: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick, onNavigate }) => {
   const { categorizePerks, isLoaded, perks, clearAllData } = usePerks();
   const [showDemoNotice, setShowDemoNotice] = React.useState(false);
   
@@ -29,6 +30,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
 
   const handleContinueWithDemo = () => {
     setShowDemoNotice(false);
+  };
+
+  const handleAddFirstPerk = () => {
+    if (onNavigate) {
+      onNavigate('add-perk');
+    }
   };
   
   if (!isLoaded) {
@@ -192,40 +199,42 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
         </div>
       </motion.div>
 
-      {/* Stats Grid */}
-      <motion.div 
-        className="grid grid-cols-2 lg:grid-cols-4 gap-6"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-      >
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={stat.title}
-              className="relative group"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all duration-300">
-                <div className="flex items-center space-x-4">
-                  <div className={`p-3 rounded-2xl bg-gradient-to-r ${stat.gradient} shadow-lg`}>
-                    <Icon className="text-white" size={24} />
+      {/* Stats Grid - Only show if there are perks */}
+      {perks.length > 0 && (
+        <motion.div 
+          className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={stat.title}
+                className="relative group"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl p-6 hover:border-white/20 transition-all duration-300">
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-3 rounded-2xl bg-gradient-to-r ${stat.gradient} shadow-lg`}>
+                      <Icon className="text-white" size={24} />
+                    </div>
+                    <div>
+                      <p className="text-3xl font-black text-white">{stat.value}</p>
+                      <p className="text-sm font-medium text-slate-400">{stat.title}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-3xl font-black text-white">{stat.value}</p>
-                    <p className="text-sm font-medium text-slate-400">{stat.title}</p>
-                  </div>
+                  <p className="text-xs text-slate-500 mt-3">{stat.description}</p>
                 </div>
-                <p className="text-xs text-slate-500 mt-3">{stat.description}</p>
-              </div>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      )}
 
       {/* Perk Sections */}
       {sections.map((section, sectionIndex) => {
@@ -296,14 +305,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onPerkClick }) => {
           <p className="text-slate-400 text-lg mb-8 max-w-md mx-auto">
             Start tracking your free trials, credits, and perks to maximize their value before they expire.
           </p>
-          <motion.div
+          <motion.button
+            onClick={handleAddFirstPerk}
+            className="inline-block px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-2xl text-white font-bold text-lg shadow-2xl cursor-pointer hover:from-emerald-600 hover:to-blue-700 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="inline-block px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-2xl text-white font-bold text-lg shadow-2xl cursor-pointer">
-              Add Your First Perk
-            </div>
-          </motion.div>
+            Add Your First Perk
+          </motion.button>
         </motion.div>
       )}
     </div>

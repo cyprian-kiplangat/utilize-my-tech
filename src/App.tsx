@@ -27,7 +27,7 @@ function App() {
   const renderContent = () => {
     switch (currentPage) {
       case 'dashboard':
-        return <Dashboard onPerkClick={handlePerkClick} />;
+        return <Dashboard onPerkClick={handlePerkClick} onNavigate={handleNavigate} />;
       case 'perk-detail':
         return selectedPerkId ? (
           <PerkDetail 
@@ -40,9 +40,9 @@ function App() {
       case 'add-perk':
         return <AddPerk onSuccess={handleAddPerkSuccess} />;
       case 'settings':
-        return <PortfolioConfig />;
+        return <PortfolioConfig onNavigate={handleNavigate} />;
       default:
-        return <Dashboard onPerkClick={handlePerkClick} />;
+        return <Dashboard onPerkClick={handlePerkClick} onNavigate={handleNavigate} />;
     }
   };
 

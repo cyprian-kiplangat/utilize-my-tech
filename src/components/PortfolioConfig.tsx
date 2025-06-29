@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import { Settings, Target, Bell, TrendingUp, Shield, Zap, Calendar, DollarSign, AlertTriangle, CheckCircle, BarChart3, PieChart } from 'lucide-react';
+import { Settings, Target, Bell, TrendingUp, Shield, Zap, Calendar, DollarSign, AlertTriangle, CheckCircle, BarChart3, PieChart, Download, Upload, Trash2, FileText, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { usePerks } from '../hooks/usePerks';
 
-export const PortfolioConfig: React.FC = () => {
-  const { perks } = usePerks();
+interface PortfolioConfigProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const PortfolioConfig: React.FC<PortfolioConfigProps> = ({ onNavigate }) => {
+  const { perks, clearAllData } = usePerks();
   const [activeTab, setActiveTab] = useState('overview');
+  const [alertSettings, setAlertSettings] = useState({
+    expiryWarnings: true,
+    roiOpportunities: true,
+    achievementMilestones: false
+  });
+  const [goals, setGoals] = useState({
+    monthlyROITarget: 90,
+    portfolioValueGoal: 10000
+  });
 
   // Calculate portfolio metrics
   const totalValue = perks.reduce((sum, perk) => {
@@ -30,6 +43,80 @@ export const PortfolioConfig: React.FC = () => {
     { id: 'goals', label: 'Investment Goals', icon: Target },
     { id: 'security', label: 'Data Security', icon: Shield },
   ];
+
+  const handleExportData = () => {
+    const dataToExport = {
+      perks,
+      exportDate: new Date().toISOString(),
+      version: '1.0'
+    };
+    
+    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `utilizemytech-portfolio-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importedData = JSON.parse(e.target?.result as string);
+        if (importedData.perks && Array.isArray(importedData.perks)) {
+          if (window.confirm('This will replace your current portfolio data. Are you sure?')) {
+            localStorage.setItem('utilize-my-tech-perks', JSON.stringify(importedData.perks));
+            window.location.reload();
+          }
+        } else {
+          alert('Invalid file format. Please select a valid UtilizeMyTech export file.');
+        }
+      } catch (error) {
+        alert('Error reading file. Please ensure it\'s a valid JSON file.');
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleClearAllData = () => {
+    if (window.confirm('This will permanently delete all your portfolio data. This action cannot be undone. Are you sure?')) {
+      clearAllData();
+      if (onNavigate) {
+        onNavigate('dashboard');
+      }
+    }
+  };
+
+  const handleAlertToggle = (setting: keyof typeof alertSettings) => {
+    setAlertSettings(prev => ({
+      ...prev,
+      [setting]: !prev[setting]
+    }));
+    // Save to localStorage
+    localStorage.setItem('utilize-my-tech-alert-settings', JSON.stringify({
+      ...alertSettings,
+      [setting]: !alertSettings[setting]
+    }));
+  };
+
+  const handleGoalChange = (goal: keyof typeof goals, value: number) => {
+    setGoals(prev => ({
+      ...prev,
+      [goal]: value
+    }));
+    // Save to localStorage
+    localStorage.setItem('utilize-my-tech-goals', JSON.stringify({
+      ...goals,
+      [goal]: value
+    }));
+  };
 
   const renderOverview = () => (
     <div className="space-y-8">
@@ -129,7 +216,12 @@ export const PortfolioConfig: React.FC = () => {
               </div>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" defaultChecked />
+              <input 
+                type="checkbox" 
+                className="sr-only peer" 
+                checked={alertSettings.expiryWarnings}
+                onChange={() => handleAlertToggle('expiryWarnings')}
+              />
               <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
@@ -145,7 +237,12 @@ export const PortfolioConfig: React.FC = () => {
               </div>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" defaultChecked />
+              <input 
+                type="checkbox" 
+                className="sr-only peer" 
+                checked={alertSettings.roiOpportunities}
+                onChange={() => handleAlertToggle('roiOpportunities')}
+              />
               <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
@@ -161,7 +258,12 @@ export const PortfolioConfig: React.FC = () => {
               </div>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" />
+              <input 
+                type="checkbox" 
+                className="sr-only peer" 
+                checked={alertSettings.achievementMilestones}
+                onChange={() => handleAlertToggle('achievementMilestones')}
+              />
               <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
@@ -178,38 +280,81 @@ export const PortfolioConfig: React.FC = () => {
         <div className="space-y-6">
           <div className="p-6 bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-2xl">
             <h4 className="text-lg font-semibold text-purple-400 mb-4">Monthly ROI Target</h4>
-            <div className="flex items-center space-x-4">
-              <div className="flex-1">
-                <div className="flex justify-between text-sm text-slate-400 mb-2">
-                  <span>Current: 75%</span>
-                  <span>Target: 90%</span>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-1">
+                  <div className="flex justify-between text-sm text-slate-400 mb-2">
+                    <span>Current: {completionRate}%</span>
+                    <span>Target: {goals.monthlyROITarget}%</span>
+                  </div>
+                  <div className="w-full bg-slate-800 rounded-full h-3">
+                    <div 
+                      className="bg-gradient-to-r from-purple-500 to-pink-600 h-3 rounded-full transition-all duration-300" 
+                      style={{ width: `${Math.min((completionRate / goals.monthlyROITarget) * 100, 100)}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-3">
-                  <div className="bg-gradient-to-r from-purple-500 to-pink-600 h-3 rounded-full" style={{ width: '75%' }}></div>
+                <div className="text-right">
+                  <p className="text-2xl font-bold text-white">{completionRate}%</p>
+                  <p className="text-xs text-slate-400">Completion</p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-2xl font-bold text-white">75%</p>
-                <p className="text-xs text-slate-400">Completion</p>
+              <div>
+                <label className="block text-sm text-slate-300 mb-2">Set Target (%)</label>
+                <input
+                  type="range"
+                  min="50"
+                  max="100"
+                  value={goals.monthlyROITarget}
+                  onChange={(e) => handleGoalChange('monthlyROITarget', parseInt(e.target.value))}
+                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
+                />
+                <div className="flex justify-between text-xs text-slate-500 mt-1">
+                  <span>50%</span>
+                  <span className="text-purple-400 font-bold">{goals.monthlyROITarget}%</span>
+                  <span>100%</span>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="p-6 bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border border-blue-500/30 rounded-2xl">
             <h4 className="text-lg font-semibold text-blue-400 mb-4">Portfolio Value Goal</h4>
-            <div className="flex items-center space-x-4">
-              <div className="flex-1">
-                <div className="flex justify-between text-sm text-slate-400 mb-2">
-                  <span>Current: ${totalValue.toLocaleString()}</span>
-                  <span>Target: $10,000</span>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-1">
+                  <div className="flex justify-between text-sm text-slate-400 mb-2">
+                    <span>Current: ${totalValue.toLocaleString()}</span>
+                    <span>Target: ${goals.portfolioValueGoal.toLocaleString()}</span>
+                  </div>
+                  <div className="w-full bg-slate-800 rounded-full h-3">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full transition-all duration-300" 
+                      style={{ width: `${Math.min((totalValue / goals.portfolioValueGoal) * 100, 100)}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-3">
-                  <div className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full" style={{ width: `${Math.min((totalValue / 10000) * 100, 100)}%` }}></div>
+                <div className="text-right">
+                  <p className="text-2xl font-bold text-white">{Math.round((totalValue / goals.portfolioValueGoal) * 100)}%</p>
+                  <p className="text-xs text-slate-400">of Goal</p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-2xl font-bold text-white">{Math.round((totalValue / 10000) * 100)}%</p>
-                <p className="text-xs text-slate-400">of Goal</p>
+              <div>
+                <label className="block text-sm text-slate-300 mb-2">Set Target ($)</label>
+                <input
+                  type="range"
+                  min="1000"
+                  max="50000"
+                  step="1000"
+                  value={goals.portfolioValueGoal}
+                  onChange={(e) => handleGoalChange('portfolioValueGoal', parseInt(e.target.value))}
+                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
+                />
+                <div className="flex justify-between text-xs text-slate-500 mt-1">
+                  <span>$1K</span>
+                  <span className="text-blue-400 font-bold">${(goals.portfolioValueGoal / 1000).toFixed(0)}K</span>
+                  <span>$50K</span>
+                </div>
               </div>
             </div>
           </div>
@@ -239,15 +384,62 @@ export const PortfolioConfig: React.FC = () => {
           <div className="p-6 bg-black/20 border border-white/10 rounded-2xl">
             <h4 className="text-lg font-semibold text-white mb-4">Data Management</h4>
             <div className="space-y-3">
-              <button className="w-full p-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-medium transition-colors duration-200">
-                Export Portfolio Data
-              </button>
-              <button className="w-full p-3 bg-slate-700 hover:bg-slate-600 rounded-xl text-white font-medium transition-colors duration-200">
-                Import Portfolio Data
-              </button>
-              <button className="w-full p-3 bg-red-600 hover:bg-red-700 rounded-xl text-white font-medium transition-colors duration-200">
-                Clear All Data
-              </button>
+              <motion.button 
+                onClick={handleExportData}
+                className="w-full p-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Download size={18} />
+                <span>Export Portfolio Data</span>
+              </motion.button>
+              
+              <motion.label 
+                className="w-full p-3 bg-slate-700 hover:bg-slate-600 rounded-xl text-white font-medium transition-colors duration-200 flex items-center justify-center space-x-2 cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Upload size={18} />
+                <span>Import Portfolio Data</span>
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={handleImportData}
+                  className="hidden"
+                />
+              </motion.label>
+              
+              <motion.button 
+                onClick={handleClearAllData}
+                className="w-full p-3 bg-red-600 hover:bg-red-700 rounded-xl text-white font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Trash2 size={18} />
+                <span>Clear All Data</span>
+              </motion.button>
+            </div>
+          </div>
+
+          <div className="p-6 bg-black/20 border border-white/10 rounded-2xl">
+            <h4 className="text-lg font-semibold text-white mb-4">Privacy Information</h4>
+            <div className="space-y-3 text-sm text-slate-300">
+              <div className="flex items-start space-x-3">
+                <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
+                <span>No data is sent to external servers except for AI features (when configured)</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
+                <span>AI API calls are made directly to Google AI from your browser</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
+                <span>Your API keys are stored locally and never shared</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
+                <span>All portfolio data remains under your control</span>
+              </div>
             </div>
           </div>
         </div>
