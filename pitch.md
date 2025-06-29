@@ -62,7 +62,18 @@ Instead of treating trials as "throwaway freebies," we apply **investment portfo
 - **ROI Optimization**: "Your MongoDB Atlas free tier can handle 3 more projects"
 - **Strategic Guidance**: "Focus on Vercel Pro features that justify the subscription"
 
-### **📊 Step 4: Progress Tracking**
+### **🚀 Step 4: Smart Asset Acquisition**
+*"AI-powered data extraction and discovery"*
+
+**Revolutionary Features:**
+- **Smart Extract**: Paste any email or announcement to automatically extract perk data
+- **Web Discovery**: Search for current offers and promotions in real-time
+- **Auto-Fill Forms**: AI populates all fields with high accuracy
+- **Confidence Scoring**: See how reliable the extracted data is
+
+**Example**: Paste "Get $500 in OpenAI API credits for new developers..." and watch the AI automatically fill out name, provider, value, category, and expiry date.
+
+### **📊 Step 5: Progress Tracking**
 *"From trial to mastery"*
 
 Each asset has a **4-stage utilization pipeline**:
@@ -73,13 +84,23 @@ Each asset has a **4-stage utilization pipeline**:
 
 **Progress visualization** shows exactly how much value you've extracted from each resource.
 
-### **🎯 Step 5: Goal Setting & Analytics**
-*"Investment-grade reporting"*
+### **⚙️ Step 6: Portfolio Configuration**
+*"Investment-grade management tools"*
 
-- **Monthly ROI Targets**: Aim for 90% completion rate
-- **Portfolio Value Goals**: Track toward $10K+ in managed resources
-- **Category Analysis**: See which types of tools provide most value
-- **Achievement Milestones**: Celebrate when you maximize an asset
+**Smart Alerts System:**
+- Expiry warnings (7, 3, 1 day notifications)
+- ROI opportunity suggestions
+- Achievement milestone celebrations
+
+**Investment Goals:**
+- Set monthly ROI targets (50-100%)
+- Portfolio value goals ($1K-$50K)
+- Real-time progress tracking
+
+**Data Security:**
+- Export/import portfolio data
+- Local storage only (privacy-first)
+- Complete data control
 
 ---
 
@@ -96,6 +117,12 @@ Each asset has a **4-stage utilization pipeline**:
 - **Creates urgency around expiring assets**
 - **Gamifies the optimization process**
 - **Builds pride in portfolio management**
+
+### **🤖 AI-First Experience**
+- **Smart data extraction** from any text source
+- **Intelligent web discovery** of new opportunities
+- **Personalized optimization** suggestions
+- **Conversational portfolio** management
 
 ---
 
@@ -133,7 +160,7 @@ Each asset has a **4-stage utilization pipeline**:
 - **Premium UX that matches the value being managed**
 
 ### **🛡️ Moats**
-1. **Network Effects**: Community sharing of optimization strategies
+1. **AI Integration**: Smart data extraction and optimization suggestions
 2. **Data Advantage**: Learning from user behavior to improve AI suggestions
 3. **Integration Depth**: Direct API connections with major platforms
 4. **Brand Authority**: Becoming the "Bloomberg Terminal for developer resources"
@@ -225,6 +252,28 @@ Each asset has a **4-stage utilization pipeline**:
 5. **Portfolio dashboard** displays professional investment tracking
 
 **Result**: Developer goes from "I forgot I had these" to "I'm strategically managing $3K+ in tech investments"
+
+---
+
+## 🆕 **Latest Features & Improvements**
+
+### **🤖 AI-Powered Smart Acquisition**
+- **Text Extraction**: Paste any email or announcement to auto-extract perk data
+- **Web Discovery**: Search for current offers with AI-powered relevance scoring
+- **Confidence Indicators**: See how reliable the extracted data is
+- **Auto-Fill Forms**: Complete forms automatically with high accuracy
+
+### **⚙️ Advanced Portfolio Configuration**
+- **Smart Alert System**: Customizable notifications for expiry warnings and ROI opportunities
+- **Investment Goals**: Set and track monthly ROI targets and portfolio value goals
+- **Data Management**: Export/import portfolio data with full privacy control
+- **Real-time Analytics**: Live portfolio metrics and category breakdowns
+
+### **🎨 Enhanced User Experience**
+- **Improved Navigation**: Fixed empty state interactions and seamless page transitions
+- **Responsive Design**: Optimized for all devices with smooth animations
+- **Privacy-First**: All data stored locally with optional AI features
+- **Professional UI**: Investment-grade design that reflects the value being managed
 
 ---
 
